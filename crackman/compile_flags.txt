@@ -1,0 +1,5 @@
+-I/usr/local/cell/target/ppu/include
+-Ilib/cpython/Include
+-Ilib/cpython
+--gcc-toolchain=/usr/local/cell/host-win32/ppu
+-nostdlibinc
