@@ -8,7 +8,7 @@ void print(PyObject *obj)
 
     const char *bytes = PyBytes_AS_STRING(str);
     printf("%s\n", bytes);
-    fflush(stdout);
+    //fflush(stdout);
 
     Py_XDECREF(repr);
     Py_XDECREF(str);

@@ -1,0 +1,14 @@
+{
+    "ccls.clang.extraArgs": [
+        "--gcc-toolchain=/usr/local/cell/host-win32/ppu",
+    ],
+    "search.exclude": {
+        "/usr/include": true,
+        "/usr/include/**/*": true,
+        "/usr/include/": true,
+        "/usr/lib": true,
+        "/usr/lib/": true,
+        "/usr/lib/**/*": true,
+        ".ccls-cache": true,
+    },
+}
