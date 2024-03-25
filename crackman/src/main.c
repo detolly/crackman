@@ -1,6 +1,6 @@
 
-#include "pythonrun.h"
 #include <Python.h>
+#include "pythonrun.h"
 
 #include <stdio.h>
 #include <sys/prx.h>
@@ -35,13 +35,24 @@ int start(size_t argc, void* argp)
 	return 0;
 }
 
+#include <sys/timer.h>
+
 int main()
 {
 	puts("greetings");
+	Py_SetPythonHome(L"/dev_hdd0/python/lib");
 	Py_Initialize();
 	puts("after py_initialize");
 
-	// PyRun_SimpleStringFlags("print(\"hello from python\")", NULL);
+	PyRun_SimpleString("a = 5");
+	
+	PyObject *module = PyImport_AddModule("__main__");
+	PyObject *a = PyObject_GetAttrString(module,"a");
+	printf("a = %d\n", PyLong_AsLong(a));
+	Py_DECREF(a);
+
+	printf("exit program\n");
+
 
 	return 0;
 }
