@@ -23,33 +23,25 @@
 
 // };
 
-int stop(void)
-{
-	return 0;
-}
-
-int start(size_t argc, void* argp)
-{
-	//sys_prx_load_module(SYS_APP_HOME "/libfs.sprx", 0, NULL);
-
-	return 0;
-}
-
 #include <sys/timer.h>
+#include <print.h>
 
 int main()
 {
-	puts("greetings");
+	sys_prx_load_module("libfs.sprx", 0, NULL);
+
 	Py_SetPythonHome(L"/dev_hdd0/python/lib");
 	Py_Initialize();
-	puts("after py_initialize");
 
-	PyRun_SimpleString("a = 5");
+	PyRun_SimpleString("with open('test.txt', 'w+') as f:\n\tf.write('greetings')\n\n");
 	
 	PyObject *module = PyImport_AddModule("__main__");
 	PyObject *a = PyObject_GetAttrString(module,"a");
-	printf("a = %d\n", PyLong_AsLong(a));
+	
+	print(a);
+
 	Py_DECREF(a);
+	Py_DECREF(module);
 
 	printf("exit program\n");
 
