@@ -3,10 +3,24 @@
 #include <pythonrun.h>
 
 #include <stdio.h>
-#include <sys/prx.h>
 #include <sys/timer.h>
+#include <sys/prx.h>
 
 #include <print.h>
+
+SYS_MODULE_INFO(crackman, 0, 1, 1);
+SYS_MODULE_START(main);
+SYS_MODULE_STOP(stop);
+SYS_MODULE_EXIT(stop);
+
+int __exit_user_prx_modules() {}
+int __fini() {}
+int _exit() {}
+
+int stop()
+{
+	return 0;
+}
 
 int main()
 {
@@ -15,13 +29,21 @@ int main()
 	Py_SetPythonHome(L"/dev_hdd0/python");
 	Py_Initialize();
 
-	// PyRun_SimpleString("a = 5");
-	PyRun_SimpleString("print(\"hello from python\")");
-	// PyRun_SimpleString("import datetime\na = dir(datetime)");
+	// int ret = PyRun_SimpleString("def getnum():\n\treturn 20000");
+	int ret = PyRun_SimpleString("with open('/dev_hdd0/python/run/test.txt', 'x') as f:\n\tf.write('greetings')\n\n");
 
-	printf("PyErr_Occurred = ");
-	print(PyErr_Occurred());
+	if (ret != 0) {
+		printf("PyErr_Occurred = ");
+		print(PyErr_Occurred());
+	}
+
+	// ret = PyRun_SimpleString("a = getnum()");
 	
+	// if (ret != 0) {
+	// 	printf("PyErr_Occurred = ");
+	// 	print(PyErr_Occurred());
+	// }
+
 	PyObject *module = PyImport_AddModule("__main__");
 	PyObject *a = PyObject_GetAttrString(module,"a");
 	
@@ -30,7 +52,5 @@ int main()
 	Py_DECREF(a);
 
 	printf("exit program\n");
-
-
 	return 0;
 }
